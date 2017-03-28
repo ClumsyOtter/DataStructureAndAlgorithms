@@ -22,6 +22,7 @@
 		<module>DSAA-Linked_List</module>
 		<module>DSAA-Stack</module>
 		<module>DSAA-tree</module>
+		<module>DSAA-Hash</module>
 	</modules>
 	<build>
 		<plugins>
