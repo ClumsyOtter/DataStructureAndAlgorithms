@@ -65,9 +65,18 @@ public class SeparateChainingHashTable<T> {
 
 	private List<T>[] linkList; // 数据数组
 	private int currentSize; // 数据占据数组的大小
+	// 超出数组范围 扩大为原来的两倍
 
+	@SuppressWarnings("unchecked")
 	private void rehash() {
-
+		List<T>[] oldlinkList = linkList;
+		linkList = new List[nextPrime(linkList.length * 2)];
+		for (List<T> list : oldlinkList) {
+			if (list != null && !list.isEmpty())
+				for (T t : list) {
+					insert(t);
+				}
+		}
 	}
 
 	private int myhash(T t) {
@@ -78,12 +87,12 @@ public class SeparateChainingHashTable<T> {
 		return hashval;
 	}
 
-	//下一个素数
+	// 下一个素数
 	private static int nextPrime(int n) {
-		//如果是偶数则加1变奇数（所有的偶数除2以外都不是素数）
+		// 如果是偶数则加1变奇数（所有的偶数除2以外都不是素数）
 		if (n % 2 == 0)
 			n++;
-		//如果不是素数则加2
+		// 如果不是素数则加2
 		for (; !isPrime(n); n += 2)
 			;
 
@@ -91,24 +100,22 @@ public class SeparateChainingHashTable<T> {
 	}
 
 	/**
-	  *是否为素数
-	  *素数，有无限个。素数定义为在大于1的自然数中，
-	  *除了1和它本身以外不再有其他因数的数称为素数。
+	 * 是否为素数 素数，有无限个。素数定义为在大于1的自然数中， 除了1和它本身以外不再有其他因数的数称为素数。
 	 */
 	private static boolean isPrime(int n) {
-		//2,3是素数
+		// 2,3是素数
 		if (n == 2 || n == 3)
 			return true;
-		//1是特例不是素数 
-		//若被偶数整除不是素数
+		// 1是特例不是素数
+		// 若被偶数整除不是素数
 		if (n == 1 || n % 2 == 0)
 			return false;
-		//若被奇数整除则不是素数 (3,5,7,9,11,13,15,17.......)
-		//若i*i>=n 此时i已经是遍历n的所有可能公因数
+		// 若被奇数整除则不是素数 (3,5,7,9,11,13,15,17.......)
+		// 若i*i>=n 此时i已经是遍历n的所有可能公因数
 		for (int i = 3; i * i <= n; i += 2)
 			if (n % i == 0)
 				return false;
-		//若通过上述的判断则为素数。
+		// 若通过上述的判断则为素数。
 		return true;
 	}
 }
