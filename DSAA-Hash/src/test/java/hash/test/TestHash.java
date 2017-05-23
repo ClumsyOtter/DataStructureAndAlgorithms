@@ -2,7 +2,7 @@ package hash.test;
 
 import org.junit.Test;
 
-import com.hash.separatechaining.DoubleQuadraticProbingHashTable;
+import com.hash.DoubleQuadraticProbingHashTable;
 
 public class TestHash {
 	@Test

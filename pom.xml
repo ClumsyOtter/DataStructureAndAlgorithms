@@ -23,6 +23,8 @@
 		<module>DSAA-Stack</module>
 		<module>DSAA-tree</module>
 		<module>DSAA-Hash</module>
+		<module>DSAA-ADT</module>
+		<module>DSAA-Map</module>
 	</modules>
 	<build>
 		<plugins>

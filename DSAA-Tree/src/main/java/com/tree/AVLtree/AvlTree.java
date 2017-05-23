@@ -1,12 +1,19 @@
 package com.tree.AVLtree;
 
+import java.util.Date;
+import java.util.Random;
+
+import javax.xml.soap.Node;
+
+import com.tree.binarytree.TreeNode;
+
 public class AvlTree<T extends Comparable<? super T>> {
 
 	/*
 	 * 节点高度
 	 */
 	public int getNodeHight(AvlNode<T> node) {
-		return node == null ? 0 : node.hight;
+		return node == null ? -1 : node.hight;
 	}
 
 	/*
@@ -51,7 +58,7 @@ public class AvlTree<T extends Comparable<? super T>> {
 				// 如果左子树的右子树的高度大于左子树的高度则向双向右旋转
 				node = doubleWithLeftChild(node);
 		// 平衡完成后将高度更新
-		node.hight = Math.max(getNodeHight(node.left), getNodeHight(node.right) + 1);
+		node.hight = Math.max(getNodeHight(node.left), getNodeHight(node.right)) + 1;
 		return node;
 	}
 
@@ -105,7 +112,7 @@ public class AvlTree<T extends Comparable<? super T>> {
 
 	// 移除一个节点
 	public AvlNode<T> remove(T x, AvlNode<T> node) {
-		// 未找到 
+		// 未找到
 		if (node == null) {
 			return node;
 		}
@@ -114,12 +121,12 @@ public class AvlTree<T extends Comparable<? super T>> {
 			node.left = remove(x, node.left);
 		else if (result > 0)
 			node.right = remove(x, node.right);
-		//两个子树
+		// 两个子树
 		else if (node.left != null && node.right != null) {
 			node.date = findMin(node.right);
 			node.right = remove(node.date, node.right);
 		} else
-			//一个子树
+			// 一个子树
 			node = node.left == null ? node.right : node.left;
 		return balance(node);
 	}
@@ -132,5 +139,25 @@ public class AvlTree<T extends Comparable<? super T>> {
 		else if (node.left == null)
 			return node.date;
 		return findMin(node.left);
+	}
+
+	public void printTree(AvlNode<T> node) {
+		System.out.println(node.date);
+		if (node.left != null) {
+			printTree(node.left);
+		}
+		if (node.right != null) {
+			printTree(node.right);
+		}
+	}
+
+	public static void main(String[] args) {
+		AvlTree<Integer> avlTree = new AvlTree<>();
+		AvlNode<Integer> root = new AvlNode<Integer>(52, null, null);
+		for (int i = 0; i < 15; i++) {
+			Random random = new Random(new Date().getTime());
+			avlTree.insert(root, i + random.nextInt(100));
+		}
+		avlTree.printTree(root);
 	}
 }
